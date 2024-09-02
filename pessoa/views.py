@@ -16,7 +16,7 @@ from . forms import CadastroPessoa, FormConjuge, FormDependente
 def home(request):
     form = CadastroPessoa()
     pessoas = Pessoas.objects.all()
-    return render(request, 'home.html', {'pessoas': pessoas , 'form': form} )
+    return render(request, 'home.html', {'pessoas': pessoas , 'form': form})
     
 
 

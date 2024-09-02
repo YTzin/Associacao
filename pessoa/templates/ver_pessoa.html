@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Pessoa</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000; /* Garante que a navbar esteja sobre outros elementos */
+        }
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 0 15px;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Altura mínima da tela */
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f8f9fa; /* Cor de fundo para melhor visualização */
+        }
+        .a4-container {
+            width: 210mm; /* Largura da folha A4 */
+            height: 297mm; /* Altura da folha A4 */
+            border: 1px solid #000; /* Define a borda do retângulo */
+            padding: 20px; /* Espaçamento interno */
+            box-sizing: border-box; /* Inclui o padding dentro das dimensões */
+            background-color: #fff; /* Fundo branco */
+            font-size: 18px;
+            align-items: center;
+            
+        }
+        h1, p {
+            margin: 0;
+            padding: 10px 0;
+        }
+        .btn-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px; /* Espaçamento superior do botão */
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff; /* Cor azul */
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s; /* Transição suave para a cor de fundo */
+        }
+        .btn:hover {
+            background-color: #0056b3; /* Cor azul escuro no hover */
+        }
+ @media print {
+    .signature-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+    }
+
+    .signature {
+        width: 200px;
+        text-align: center;
+    }
+
+    .signature-line {
+        border-top: 1px solid #000;
+        margin-top: 10px;
+        padding-top: 5px;
+        width: 200px;
+    }
+
+        
+    .navbar {
+        display: none; /* Remove a navbar ao imprimir ou gerar o PDF */
+    }
+    .a4-container {
+        border: none; /* Remove a borda ao imprimir ou ao gerar o PDF */
+    }
+    .no-print {
+        display: none; /* Oculta o botão "Baixar PDF" ao imprimir ou gerar o PDF */
+    }
+}
+.photo-container {
+    position: absolute; /* Para posicionamento relativo ao contêiner */
+    top: 20px; /* Espaçamento do topo */
+    left: 20px; /* Espaçamento da esquerda */
+    width: 80px; /* Largura da foto 3x4 */
+    height: 100px; /* Altura da foto 3x4 */
+}
+
+.photo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta a imagem para cobrir o contêiner */
+    border: 1px solid #000; /* Adiciona uma borda opcional */
+}
+.signature-container {
+    display: flex;
+    justify-content: space-between; /* Espaça as assinaturas de maneira uniforme */
+    margin-top: 50px; /* Adiciona espaço antes das assinaturas */
+}
+
+.signature {
+    width: 45%; /* Garante que as assinaturas ocupem 45% da largura cada uma */
+    text-align: center;
+}
+
+.signature p {
+    margin: 0;
+}
+
+.signature-line {
+    border-top: 1px solid #000;
+    margin-top: 10px; /* Adiciona espaço antes da linha de assinatura */
+    padding-top: 5px;
+}
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="{% url 'home' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-houses-fill" viewBox="0 0 16 16">
+                <path d="M7.207 1a1 1 0 0 0-1.414 0L.146 6.646a.5.5 0 0 0 .708.708L1 7.207V12.5A1.5 1.5 0 0 0 2.5 14h.55a2.5 2.5 0 0 1-.05-.5V9.415a1.5 1.5 0 0 1-.56-2.475l5.353-5.354z"/>
+                <path d="M8.793 2a1 1 0 0 1 1.414 0L12 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l1.854 1.853a.5.5 0 0 1-.708.708L15 8.207V13.5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 4 13.5V8.207l-.146.147a.5.5 0 1 1-.708-.708z"/>
+            </svg>
+            Associação
+        </a>
+        
+    </div>
+    <br> <br><br>
+    <div class="container">
+        
+        <div class="a4-container">
+            
+            <h1 style="text-align: center;" >FICHA DE CADASTRAMENTO DE SÓCIO</h1>
+            <h1 style="text-align: center;">ASSOCIAÇÃO COMUNITÁRIA PORFÍRIO NOGUEIRA DA COSTA</h1>
+            <p>
+                <strong>Nome:</strong> {{ pessoa.nome }} 
+                <strong>Data de Nascimento:</strong> {{ pessoa.data_nascimento|date:"d/m/Y" }}
+                <strong>Idade:</strong> {{ pessoa.idade }} 
+                <strong>Naturalidade:</strong> {{ pessoa.naturalidade }} 
+                <strong>Sexo:</strong> {{ pessoa.get_sexo_display }}
+                <strong>Estado Civil:</strong> {{ pessoa.get_estado_civil_display }} 
+                <strong>Telefone:</strong> {{ pessoa.telefone }} 
+                <strong>Endereço:</strong> {{ pessoa.endereco }} 
+                <strong>RG:</strong> {{ pessoa.n_rg }} 
+                <strong>Órgão Exp.:</strong> {{ pessoa.orgao_exp }} 
+                <strong>Data de Expedição:</strong> {{ pessoa.data_expedicao|date:"d/m/Y" }} 
+                <strong>CPF:</strong> {{ pessoa.cpf }} 
+                <strong>Título de Eleitor:</strong> {{ pessoa.titulo }}
+                <strong>Carteira de Trabalho:</strong> {{ pessoa.carteira_trabalho }}
+                <strong>Série:</strong> {{ pessoa.serie }}
+                <strong>Registro Civil:</strong> {{ pessoa.registro_civil }}
+                <strong>Certidão:</strong> {{ pessoa.certidao }}
+                <strong>Folhas:</strong> {{ pessoa.folhas }}
+                <strong>Livro:</strong> {{ pessoa.livro }}
+                <strong>Data de Emissão:</strong> {{ pessoa.data_emissao|date:"d/m/Y" }}   
+                <strong>Outras Instituições:</strong> {{ pessoa.outras_instituicoes }}
+                <strong>Quais:</strong> {{ pessoa.detalhes_outros_instituicoes }}
+                
+            </p>
+            {% if pessoa.conjuge %}
+            <p>
+                <strong>Nome do cônjuge:</strong> {{ pessoa.conjuge.nome }} 
+                <strong>Data de Nascimento:</strong> {{ pessoa.conjuge.data_nascimento|date:"d/m/Y" }}
+                <strong>Idade:</strong> {{ pessoa.conjuge.idade }} 
+                <strong>Naturalidade:</strong> {{ pessoa.conjuge.naturalidade }} 
+                <strong>Sexo:</strong> {{ pessoa.conjuge.get_sexo_display }}
+                <strong>Telefone:</strong> {{ pessoa.conjuge.telefone }} 
+                <strong>Endereço:</strong> {{ pessoa.conjuge.endereco }} 
+                <strong>RG:</strong> {{ pessoa.conjuge.n_rg }} 
+                <strong>Órgão Exp.:</strong> {{ pessoa.conjuge.orgao_exp }} 
+                <strong>Data de Expedição:</strong> {{ pessoa.conjuge.data_expedicao|date:"d/m/Y" }} 
+                <strong>CPF:</strong> {{ pessoa.conjuge.cpf }} 
+                <strong>Título de Eleitor:</strong> {{ pessoa.conjuge.titulo }}
+                <strong>Carteira de Trabalho:</strong> {{ pessoa.conjuge.carteira_trabalho }}
+                <strong>Série:</strong> {{ pessoa.conjuge.serie }}
+                <strong>Registro Civil:</strong> {{ pessoa.conjuge.registro_civil }}
+                <strong>Certidão:</strong> {{ pessoa.conjuge.certidao }}
+                <strong>Folhas:</strong> {{ pessoa.conjuge.folhas }}
+                <strong>Livro:</strong> {{ pessoa.conjuge.livro }}
+                <strong>Data de Emissão:</strong> {{ pessoa.conjuge.data_emissao|date:"d/m/Y" }}   
+                <strong>Outras Instituições:</strong> {{ pessoa.conjuge.outras_instituicoes }}
+                <strong>Quais:</strong> {{ pessoa.conjuge.detalhes_outros_instituicoes }}
+            </p>
+            {% endif %}
+            {% if pessoa.dependente.all %}
+            {% for dependente in pessoa.dependente.all %}
+                <p>
+                    <strong>Nome do dependente: </strong> {{ dependente.nome }} 
+                    <strong>Data de Nascimento: </strong> {{ dependente.data_nascimento|date:"d/m/Y" }}
+                    <strong>Idade: </strong> {{ dependente.idade }} 
+                    <strong>Naturalidade: </strong> {{ dependente.naturalidade }} 
+                    <strong>Sexo: </strong> {{ dependente.get_sexo_display }}
+                    <strong>Endereço: </strong> {{ dependente.endereco }} 
+                    <strong>RG: </strong> {{ dependente.n_rg }} 
+                    <strong>Órgão Exp.: </strong> {{ dependente.orgao_exp }} 
+                    <strong>Data de Expedição: </strong> {{ dependente.data_expedicao|date:"d/m/Y" }} 
+                    <strong>CPF: </strong> {{ dependente.cpf }} 
+                    <strong>Título de Eleitor: </strong> {{ dependente.titulo }}
+                    <strong>Carteira de Trabalho: </strong> {{ dependente.carteira_trabalho }}
+                    <strong>Série: </strong> {{ dependente.serie }}
+                    <strong>Registro Civil: </strong> {{ dependente.registro_civil }}
+                    <strong>Certidão: </strong> {{ dependente.certidao }}
+                    <strong>Folhas: </strong> {{ dependente.folhas }}
+                    <strong>Livro: </strong> {{ dependente.livro }}
+                    <strong>Data de Emissão: </strong> {{ dependente.data_emissao|date:"d/m/Y" }}   
+                    <strong>Outras Instituições: </strong> {{ dependente.outras_instituicoes }}
+                    <strong>Quais: </strong> {{ dependente.detalhes_outros_instituicoes }}
+                </p>
+                
+
+                
+            {% endfor %}
+            {% endif %}
+            <span style="font-size: 10px;">
+                <strong>Data cadastramento:</strong> {{ pessoa.data_cadastramento }}
+                <strong>Data cadastramento:</strong> {{ pessoa.data_inclusao }}
+            </span>
+            <div class="signature-container">
+                <div class="signature">
+                    <p>________________________</p>
+                    <p style="font-size: 10px;" >Assinatura do Presidente</p>
+                </div>
+                <div class="signature">
+                    <p>________________________</p>
+                    <p style="font-size: 10px;" >Assinatura do Secretário</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btn-container">
+        <a  href="{% url 'gerar_pdf_pessoa' pessoa.id %}" class="btn no-print">Baixar PDF</a>
+    </div>
+
+    <br><br>
+</body>
+</html>
+
+
+
